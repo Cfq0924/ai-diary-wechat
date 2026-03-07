@@ -70,6 +70,9 @@ Page({
         });
         wx.showToast({ title: '保存成功' });
         this.setData({ editId: _id, isEdit: true });
+
+        // 调用云函数生成标签（异步，不阻塞）
+        this.generateTags(_id, this.data.content);
       }
     } catch (err) {
       console.error('保存失败:', err);
@@ -77,5 +80,21 @@ Page({
     }
 
     wx.hideLoading();
+  },
+
+  // 调用云函数生成标签
+  async generateTags(diaryId, content) {
+    try {
+      const res = await wx.cloud.callFunction({
+        name: 'generateTags',
+        data: {
+          diaryId,
+          content,
+        },
+      });
+      console.log('标签生成结果:', res.result);
+    } catch (err) {
+      console.error('生成标签失败:', err);
+    }
   },
 });

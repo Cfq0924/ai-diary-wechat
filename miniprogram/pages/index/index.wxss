@@ -95,6 +95,22 @@
   -webkit-box-orient: vertical;
 }
 
+/* 标签样式 */
+.diary-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 10px;
+}
+
+.tag-small {
+  background: #e8f5e9;
+  color: #07c160;
+  padding: 3px 10px;
+  border-radius: 10px;
+  font-size: 11px;
+}
+
 .diary-meta {
   display: flex;
   justify-content: space-between;

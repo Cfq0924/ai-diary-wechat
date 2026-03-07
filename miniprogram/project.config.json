@@ -1,4 +1,6 @@
 {
+  "cloudfunctionRoot": "cloudfunctions/",
+  "cloudbaseRoot": "cloudbaserc.json",
   "description": "AI 日记小程序",
   "packOptions": {
     "ignore": [],
@@ -54,5 +56,6 @@
     "tabIndent": "insertSpaces",
     "tabSize": 2
   },
-  "simulatorPluginLibVersion": {}
+  "simulatorPluginLibVersion": {},
+  "cloudfunctionTemplateRoot": "cloudfunctionTemplate/"
 }

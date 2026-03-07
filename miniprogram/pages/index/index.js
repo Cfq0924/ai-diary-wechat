@@ -45,6 +45,7 @@ Page({
         ...item,
         dateStr: this.formatDate(item.created_at),
         wordCount: (item.content || '').length,
+        autoTags: item.auto_tags || [],
       }));
 
       this.setData({
