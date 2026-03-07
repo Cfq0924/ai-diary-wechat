@@ -1,0 +1,119 @@
+/* pages/index/index.wxss */
+.container {
+  padding: 16px;
+  padding-bottom: 80px;
+}
+
+/* 头部 */
+.header {
+  margin-bottom: 20px;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: 600;
+  color: #333;
+  display: block;
+}
+
+.subtitle {
+  font-size: 14px;
+  color: #999;
+  display: block;
+  margin-top: 4px;
+}
+
+/* 日记列表 */
+.diary-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 0;
+}
+
+.empty-icon {
+  width: 120px;
+  height: 120px;
+  opacity: 0.5;
+}
+
+.empty-text {
+  margin-top: 16px;
+  color: #999;
+  font-size: 14px;
+}
+
+.diary-item {
+  background: #fff;
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.diary-content {
+  font-size: 15px;
+  color: #333;
+  line-height: 1.6;
+  max-height: 80px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+
+.diary-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 12px;
+}
+
+.diary-date {
+  font-size: 12px;
+  color: #999;
+}
+
+.diary-count {
+  font-size: 12px;
+  color: #07c160;
+}
+
+/* 加载状态 */
+.loading,
+.no-more {
+  text-align: center;
+  padding: 16px;
+  color: #999;
+  font-size: 13px;
+}
+
+/* 悬浮按钮 */
+.fab-btn {
+  position: fixed;
+  right: 20px;
+  bottom: 80px;
+  width: 56px;
+  height: 56px;
+  border-radius: 28px;
+  background: #07c160;
+  color: #fff;
+  font-size: 32px;
+  line-height: 56px;
+  text-align: center;
+  padding: 0;
+  box-shadow: 0 4px 16px rgba(7, 193, 96, 0.4);
+  border: none;
+  z-index: 999;
+}
+
+.fab-btn::after {
+  border: none;
+}

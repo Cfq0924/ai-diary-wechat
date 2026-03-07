@@ -1,0 +1,6 @@
+{
+  "usingComponents": {},
+  "navigationBarTitleText": "AI 日记",
+  "enablePullDownRefresh": true,
+  "backgroundTextStyle": "dark"
+}

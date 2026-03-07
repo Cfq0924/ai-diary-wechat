@@ -1,0 +1,34 @@
+<!-- 详情页面 -->
+<view class="container">
+  <view class="diary-content">
+    <text>{{content}}</text>
+  </view>
+
+  <view class="meta-info">
+    <view class="meta-item">
+      <text class="meta-label">创建时间</text>
+      <text class="meta-value">{{createdAt}}</text>
+    </view>
+    <view class="meta-item">
+      <text class="meta-label">字数</text>
+      <text class="meta-value">{{wordCount}}字</text>
+    </view>
+    <view class="meta-item" wx:if="{{autoTags && autoTags.length > 0}}">
+      <text class="meta-label">标签</text>
+      <view class="tags">
+        <text wx:for="{{autoTags}}" wx:key="*this" class="tag">{{item}}</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="actions">
+    <button class="action-btn" bindtap="goToEdit">
+      <text class="icon">✏️</text>
+      <text>编辑</text>
+    </button>
+    <button class="action-btn danger" bindtap="deleteDiary">
+      <text class="icon">🗑️</text>
+      <text>删除</text>
+    </button>
+  </view>
+</view>

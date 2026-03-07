@@ -1,0 +1,38 @@
+<!-- 搜索页面 -->
+<view class="container">
+  <!-- 搜索框 -->
+  <view class="search-box">
+    <input
+      class="search-input"
+      placeholder="搜索日记内容..."
+      value="{{keyword}}"
+      bindinput="onInput"
+      bindconfirm="doSearch"
+      confirm-type="search"
+    />
+    <button wx:if="{{keyword}}" class="clear-btn" bindtap="clearSearch">×</button>
+  </view>
+
+  <!-- 搜索结果 -->
+  <view wx:if="{{hasSearched}}" class="result-section">
+    <view wx:if="{{resultList.length === 0}}" class="empty-state">
+      <text class="empty-text">没有找到相关内容</text>
+    </view>
+
+    <view wx:else class="result-list">
+      <view class="result-info">找到 {{resultList.length}} 篇相关日记</view>
+      <view wx:for="{{resultList}}" wx:key="_id" class="result-item" bindtap="goToDetail" data-id="{{item._id}}">
+        <view class="result-content">{{item.highlight}}</view>
+        <view class="result-meta">
+          <text class="result-date">{{item.dateStr}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 初始状态 -->
+  <view wx:if="{{!hasSearched}}" class="search-tips">
+    <text class="tip-title">输入关键词搜索日记</text>
+    <text class="tip-desc">支持全文内容搜索</text>
+  </view>
+</view>

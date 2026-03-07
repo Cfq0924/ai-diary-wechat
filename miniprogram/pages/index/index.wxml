@@ -1,0 +1,31 @@
+<!-- 首页 - 时间线 -->
+<view class="container">
+  <!-- 头部 -->
+  <view class="header">
+    <text class="title">我的日记</text>
+    <text class="subtitle">{{today}}</text>
+  </view>
+
+  <!-- 日记列表 -->
+  <view class="diary-list">
+    <view wx:if="{{diaryList.length === 0}}" class="empty-state">
+      <image class="empty-icon" src="/images/empty.png" mode="aspectFit"></image>
+      <text class="empty-text">还没有日记，开始记录吧</text>
+    </view>
+
+    <view wx:for="{{diaryList}}" wx:key="_id" class="diary-item" bindtap="goToDetail" data-id="{{item._id}}">
+      <view class="diary-content">{{item.content}}</view>
+      <view class="diary-meta">
+        <text class="diary-date">{{item.dateStr}}</text>
+        <text class="diary-count">{{item.wordCount}}字</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 加载状态 -->
+  <view wx:if="{{loading}}" class="loading">加载中...</view>
+  <view wx:if="{{!hasMore && diaryList.length > 0}}" class="no-more">没有更多了</view>
+</view>
+
+<!-- 悬浮按钮 -->
+<button class="fab-btn" bindtap="goToEdit">+</button>

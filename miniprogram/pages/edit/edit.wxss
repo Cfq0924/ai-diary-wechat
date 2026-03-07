@@ -1,0 +1,54 @@
+/* pages/edit/edit.wxss */
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background: #fff;
+}
+
+.editor {
+  flex: 1;
+  width: 100%;
+  padding: 20px;
+  font-size: 16px;
+  line-height: 1.8;
+  border: none;
+  box-sizing: border-box;
+}
+
+.editor:focus {
+  outline: none;
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  border-top: 1px solid #f0f0f0;
+  background: #fff;
+}
+
+.word-count {
+  font-size: 13px;
+  color: #999;
+}
+
+.btn-save {
+  background: #e0e0e0;
+  color: #999;
+  border: none;
+  border-radius: 20px;
+  padding: 8px 24px;
+  font-size: 14px;
+  transition: all 0.3s;
+}
+
+.btn-save.active {
+  background: #07c160;
+  color: #fff;
+}
+
+.btn-save::after {
+  border: none;
+}

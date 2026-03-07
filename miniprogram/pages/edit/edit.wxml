@@ -1,0 +1,21 @@
+<!-- 编辑页面 -->
+<view class="container">
+  <textarea
+    class="editor"
+    placeholder="此刻在想什么？写下来吧..."
+    value="{{content}}"
+    bindinput="onInput"
+    maxlength="-1"
+    focus="{{!isEdit}}"
+    auto-height
+  ></textarea>
+
+  <view class="footer">
+    <text class="word-count">{{wordCount}}字</text>
+    <button
+      class="btn-save {{canSave ? 'active' : ''}}"
+      bindtap="saveDiary"
+      disabled="{{!canSave}}"
+    >保存</button>
+  </view>
+</view>
