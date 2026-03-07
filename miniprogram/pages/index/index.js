@@ -18,6 +18,13 @@ Page({
     this.loadDiaryList();
   },
 
+  onShow() {
+    // 从编辑页返回时，刷新列表
+    this.setData({ skip: 0, hasMore: true }, () => {
+      this.loadDiaryList(true);
+    });
+  },
+
   onPullDownRefresh() {
     this.setData({ skip: 0, hasMore: true }, () => {
       this.loadDiaryList(true);

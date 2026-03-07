@@ -57,6 +57,10 @@ Page({
           },
         });
         wx.showToast({ title: '更新成功' });
+        // 编辑模式：延迟返回上一页
+        setTimeout(() => {
+          wx.navigateBack();
+        }, 500);
       } else {
         // 新增
         const { _id } = await db.collection('diary_entries').add({
@@ -74,6 +78,11 @@ Page({
         // 调用云函数生成标签和向量（异步，不阻塞）
         this.generateTags(_id, this.data.content);
         this.generateEmbedding(_id, this.data.content);
+
+        // 新增模式：延迟返回首页
+        setTimeout(() => {
+          wx.navigateBack();
+        }, 500);
       }
     } catch (err) {
       console.error('保存失败:', err);
