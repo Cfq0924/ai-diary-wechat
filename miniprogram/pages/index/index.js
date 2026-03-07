@@ -1,6 +1,7 @@
 // pages/index/index.js
 const db = wx.cloud.database();
 const PAGE_SIZE = 20;
+const util = require('../../utils/util.js');
 
 Page({
   data: {
@@ -61,7 +62,10 @@ Page({
         ...item,
         dateStr: this.formatDate(item.created_at),
         wordCount: (item.content || '').length,
-        autoTags: item.auto_tags || [],
+        autoTags: (item.auto_tags || []).map(tag => ({
+          name: tag,
+          style: util.getTagStyle(tag),
+        })),
       }));
 
       this.setData({

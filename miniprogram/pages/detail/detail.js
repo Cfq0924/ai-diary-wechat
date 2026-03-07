@@ -1,5 +1,6 @@
 // pages/detail/detail.js
 const db = wx.cloud.database();
+const util = require('../../utils/util.js');
 
 Page({
   data: {
@@ -25,7 +26,10 @@ Page({
         content: data.content,
         createdAt: this.formatDate(data.created_at),
         wordCount: (data.content || '').length,
-        autoTags: data.auto_tags || [],
+        autoTags: (data.auto_tags || []).map(tag => ({
+          name: tag,
+          style: util.getTagStyle(tag),
+        })),
       });
 
       // 加载相关日记
@@ -55,10 +59,12 @@ Page({
       const relatedDiaries = data.map(item => {
         // 找出共同的标签
         const commonTags = (item.auto_tags || []).filter(t => tags.includes(t));
+        const commonTag = commonTags[0] || '';
         return {
           ...item,
           dateStr: this.formatDate(item.created_at),
-          commonTag: commonTags[0] || '',
+          commonTag: commonTag,
+          commonTagStyle: commonTag ? util.getTagStyle(commonTag) : null,
         };
       });
 

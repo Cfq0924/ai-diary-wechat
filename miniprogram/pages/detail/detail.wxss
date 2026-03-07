@@ -50,11 +50,10 @@
 }
 
 .tag {
-  background: #e8f5e9;
-  color: #07c160;
   padding: 4px 12px;
   border-radius: 12px;
   font-size: 12px;
+  font-weight: 500;
 }
 
 .actions {
@@ -144,8 +143,7 @@
 
 .related-tag {
   font-size: 11px;
-  color: #07c160;
-  background: #e8f5e9;
   padding: 2px 8px;
   border-radius: 8px;
+  font-weight: 500;
 }

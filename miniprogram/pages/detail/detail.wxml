@@ -16,7 +16,7 @@
     <view class="meta-item" wx:if="{{autoTags && autoTags.length > 0}}">
       <text class="meta-label">标签</text>
       <view class="tags">
-        <text wx:for="{{autoTags}}" wx:key="*this" class="tag" catchtap="searchByTag" data-tag="{{item}}">{{item}}</text>
+        <text wx:for="{{autoTags}}" wx:key="name" class="tag" style="color: {{item.style.color}}; background: {{item.style.background}}" catchtap="searchByTag" data-tag="{{item.name}}">{{item.name}}</text>
       </view>
     </view>
   </view>
@@ -29,7 +29,7 @@
         <view class="related-content">{{item.content}}</view>
         <view class="related-meta">
           <text class="related-date">{{item.dateStr}}</text>
-          <text class="related-tag" wx:if="{{item.commonTag}}">#{{item.commonTag}}</text>
+          <text class="related-tag" wx:if="{{item.commonTag}}" style="color: {{item.commonTagStyle.color}}; background: {{item.commonTagStyle.background}}">#{{item.commonTag}}</text>
         </view>
       </view>
     </view>
