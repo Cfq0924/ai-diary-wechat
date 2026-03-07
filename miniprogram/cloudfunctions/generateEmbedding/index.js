@@ -2,11 +2,7 @@
 const cloud = require('wx-server-sdk');
 cloud.init({ env: cloud.DYNAMIC_CURRENT_ENV });
 const http = require('https');
-
-// 阿里云百炼 Embedding API 配置
-const AI_API_KEY = 'sk-1a991dc9a7d14324bd11eb1f507073a7';
-const AI_API_URL = 'https://dashscope.aliyuncs.com/compatible-mode/v1/embeddings';
-const AI_MODEL = 'text-embedding-v4';
+const config = require('../config/index.js');
 
 exports.main = async (event, context) => {
   const { content, diaryId } = event;
@@ -22,7 +18,7 @@ exports.main = async (event, context) => {
   }
 
   try {
-    // 调用 DeepSeek Embedding API
+    // 调用阿里云百炼 Embedding API
     console.log('开始调用 generateEmbeddingWithAI...');
     const embedding = await generateEmbeddingWithAI(content);
     console.log('向量生成成功，维度:', embedding?.length);
@@ -49,11 +45,11 @@ exports.main = async (event, context) => {
 async function generateEmbeddingWithAI(content) {
   return new Promise((resolve, reject) => {
     const requestBody = JSON.stringify({
-      model: AI_MODEL,
+      model: config.DASHSCOPE_MODEL,
       input: content,
     });
 
-    const url = new URL(AI_API_URL);
+    const url = new URL(config.DASHSCOPE_API_URL);
     const options = {
       hostname: url.hostname,
       path: url.pathname,
@@ -61,7 +57,7 @@ async function generateEmbeddingWithAI(content) {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${AI_API_KEY}`,
+        'Authorization': `Bearer ${config.DASHSCOPE_API_KEY}`,
       },
     };
 

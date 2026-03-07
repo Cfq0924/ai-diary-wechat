@@ -4,9 +4,14 @@
   <view class="header">
     <view class="header-top">
       <text class="title">我的日记</text>
-      <view class="report-btn" bindtap="goToReport">
-        <text class="report-icon">📊</text>
-        <text class="report-text">报表</text>
+      <view class="header-actions">
+        <view class="action-btn" bindtap="goToTags">
+          <text class="action-icon">🏷️</text>
+        </view>
+        <view class="report-btn" bindtap="goToReport">
+          <text class="report-icon">📊</text>
+          <text class="report-text">报表</text>
+        </view>
       </view>
     </view>
     <text class="subtitle">{{today}}</text>
@@ -22,7 +27,7 @@
     <view wx:for="{{diaryList}}" wx:key="_id" class="diary-item" bindtap="goToDetail" data-id="{{item._id}}">
       <view class="diary-content">{{item.content}}</view>
       <view class="diary-tags" wx:if="{{item.autoTags && item.autoTags.length > 0}}">
-        <text wx:for="{{item.autoTags}}" wx:key="name" class="tag-small" style="color: {{item.style.color}}; background: {{item.style.background}}" catchtap="searchByTag" data-tag="{{item.name}}">{{item.name}}</text>
+        <text wx:for="{{item.autoTags}}" wx:key="name" wx:for-item="tagItem" class="tag-small" style="color: {{tagItem.style.color}}; background: {{tagItem.style.background}}" catchtap="searchByTag" data-tag="{{tagItem.name}}" bindlongpress="showTagMenu" data-tag="{{tagItem.name}}" data-diary-id="{{item._id}}">{{tagItem.name}}</text>
       </view>
       <view class="diary-meta">
         <text class="diary-date">{{item.dateStr}}</text>
@@ -38,3 +43,11 @@
 
 <!-- 悬浮按钮 -->
 <button class="fab-btn" bindtap="goToEdit">+</button>
+
+<!-- 标签操作菜单 -->
+<view wx:if="{{showMenu}}" class="menu-overlay" bindtap="hideMenu"></view>
+<view wx:if="{{showMenu}}" class="action-menu" style="bottom: {{menuBottom}}px">
+  <view class="menu-item" bindtap="searchByTagFromMenu">搜索该标签</view>
+  <view class="menu-item" bindtap="manageTagInPage">管理此标签</view>
+  <view class="menu-cancel" bindtap="hideMenu">取消</view>
+</view>

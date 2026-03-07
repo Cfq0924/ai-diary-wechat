@@ -1,0 +1,71 @@
+<!-- 标签管理页面 -->
+<view class="container">
+  <!-- 统计概览 -->
+  <view class="stats-card">
+    <view class="stats-row">
+      <view class="stat-item">
+        <text class="stat-value">{{totalTags}}</text>
+        <text class="stat-label">标签总数</text>
+      </view>
+      <view class="stat-item">
+        <text class="stat-value">{{totalDiaries}}</text>
+        <text class="stat-label">有标签日记</text>
+      </view>
+      <view class="stat-item">
+        <text class="stat-value">{{avgTagsPerDiary}}</text>
+        <text class="stat-label">平均每篇标签数</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 搜索框 -->
+  <view class="search-box">
+    <input class="search-input" placeholder="搜索标签..." value="{{searchKeyword}}" bindinput="onSearchInput" />
+    <button wx:if="{{searchKeyword}}" class="clear-btn" bindtap="clearSearch">×</button>
+  </view>
+
+  <!-- 标签分类 -->
+  <view class="section">
+    <view class="section-header">
+      <text class="section-title">热门标签</text>
+      <text class="section-count">TOP 10</text>
+    </view>
+    <view class="tag-cloud">
+      <view wx:for="{{hotTags}}" wx:key="name" class="tag-item" style="background: {{item.style.background}}; color: {{item.style.color}}"
+        bindtap="viewTagDetail" data-tag="{{item.name}}">
+        <text class="tag-name" bindlongpress="showTagMenu" data-tag="{{item.name}}">{{item.name}}</text>
+        <text class="tag-count">{{item.count}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 全部标签 -->
+  <view class="section">
+    <view class="section-header">
+      <text class="section-title">全部标签</text>
+      <text class="section-count">{{filteredTags.length}} 个</text>
+    </view>
+    <view wx:if="{{filteredTags.length === 0}}" class="empty-state">
+      <text class="empty-text">暂无标签</text>
+    </view>
+    <view class="tag-list">
+      <view wx:for="{{filteredTags}}" wx:key="name" class="tag-row"
+        bindtap="viewTagDetail" data-tag="{{item.name}}">
+        <view class="tag-row-left">
+          <view class="tag-dot" style="background: {{item.style.color}}"></view>
+          <text class="tag-row-name" bindlongpress="showTagMenu" data-tag="{{item.name}}">{{item.name}}</text>
+        </view>
+        <text class="tag-row-count">{{item.count}} 篇</text>
+      </view>
+    </view>
+  </view>
+</view>
+
+<!-- 标签操作菜单 -->
+<view wx:if="{{showMenu}}" class="menu-overlay" bindtap="hideMenu"></view>
+<view wx:if="{{showMenu}}" class="action-menu" style="bottom: {{menuBottom}}px">
+  <view class="menu-item" bindtap="viewTagDiaries">查看相关日记</view>
+  <view class="menu-item" bindtap="renameTag">重命名</view>
+  <view class="menu-item danger" bindtap="deleteTag">删除标签</view>
+  <view class="menu-cancel" bindtap="hideMenu">取消</view>
+</view>

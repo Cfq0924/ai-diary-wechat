@@ -5,7 +5,8 @@
     "pages/edit/edit",
     "pages/detail/detail",
     "pages/search/search",
-    "pages/report/report"
+    "pages/report/report",
+    "pages/tags/tags"
   ],
   "window": {
     "backgroundColor": "#f6f6f6",

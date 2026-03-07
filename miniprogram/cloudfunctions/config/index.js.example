@@ -1,0 +1,14 @@
+// cloudfunctions/config/index.js
+// 注意：此文件是示例模板，实际使用请复制为 index.js 并填入你的 API Key
+
+module.exports = {
+  // DeepSeek API 配置（AI 标签生成）
+  DEEPSEEK_API_KEY: 'sk-your-deepseek-api-key-here',
+  DEEPSEEK_API_URL: 'https://api.deepseek.com/chat/completions',
+  DEEPSEEK_MODEL: 'deepseek-chat',
+
+  // 阿里云百炼 API 配置（向量嵌入生成）
+  DASHSCOPE_API_KEY: 'sk-your-dashscope-api-key-here',
+  DASHSCOPE_API_URL: 'https://dashscope.aliyuncs.com/compatible-mode/v1/embeddings',
+  DASHSCOPE_MODEL: 'text-embedding-v4',
+};

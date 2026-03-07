@@ -1,46 +1,63 @@
-# AI 标签功能配置指南
+# 云函数配置指南
 
-## 第一步：选择 AI 服务提供商
+## API Key 配置
 
-推荐使用 **DeepSeek**（便宜，中文好）：
-- 官网：https://deepseek.com
-- 价格：约 ¥0.1/万 token（个人使用每月约 ¥5-10）
+所有 API Key 已统一配置在 `cloudfunctions/config/index.js` 文件中。
 
-其他选择：
-- **月之暗面 (Kimi)**: https://platform.moonshot.cn（免费额度较多）
-- **腾讯混元**: https://cloud.tencent.com/product/hunyuan（和微信集成好）
+### 编辑配置文件
 
-## 第二步：获取 API Key
+```javascript
+// cloudfunctions/config/index.js
+module.exports = {
+  // DeepSeek API 配置（AI 标签生成）
+  DEEPSEEK_API_KEY: 'sk-your-deepseek-api-key',
+  DEEPSEEK_API_URL: 'https://api.deepseek.com/chat/completions',
+  DEEPSEEK_MODEL: 'deepseek-chat',
 
-### DeepSeek 获取方式：
+  // 阿里云百炼 API 配置（向量嵌入生成）
+  DASHSCOPE_API_KEY: 'sk-your-dashscope-api-key',
+  DASHSCOPE_API_URL: 'https://dashscope.aliyuncs.com/compatible-mode/v1/embeddings',
+  DASHSCOPE_MODEL: 'text-embedding-v4',
+};
+```
+
+**注意**: `config/index.js` 已被 `.gitignore` 排除，不会被上传到 GitHub。
+
+## 云函数列表
+
+| 云函数 | 功能 | 依赖 API |
+|--------|------|----------|
+| `generateTags` | AI 标签生成 | DeepSeek Chat |
+| `generateEmbedding` | 向量嵌入生成 | 阿里云百炼 |
+| `manageTags` | 标签管理（重命名/删除/合并）| 无 |
+
+## 部署步骤
+
+1. 编辑 `cloudfunctions/config/index.js` 填入你的 API Key
+2. 在微信开发者工具中，右键点击云函数目录
+3. 选择 **"上传并部署：云端安装依赖"**
+4. 等待上传完成
+
+## 测试
+
+1. 写一篇新日记
+2. 保存后查看控制台日志
+3. 应该能看到自动生成的标签和向量
+
+---
+
+## 获取 API Key
+
+### DeepSeek（标签生成）
 1. 注册账号：https://platform.deepseek.com
 2. 进入"API Keys"页面
 3. 点击"Create API Key"
 4. 复制保存（只显示一次）
 
-## 第三步：配置云函数
-
-### 方式 1：云函数环境变量（推荐）
-1. 微信开发者工具 → 云开发
-2. 云函数 → generateTags
-3. 点击"配置"
-4. 添加环境变量：`AI_API_KEY = 你的密钥`
-5. 点击"保存并部署"
-
-### 方式 2：直接写在代码中（临时）
-修改 `cloudfunctions/generateTags/index.js` 中的 `AI_API_KEY`
-
-## 第四步：上传云函数
-
-1. 在开发者工具中，右键点击 `cloudfunctions/generateTags` 目录
-2. 选择"上传并部署：云端安装依赖"
-3. 等待上传完成
-
-## 第五步：测试
-
-1. 写一篇新日记
-2. 保存后查看控制台日志
-3. 应该能看到自动生成的标签
+### 阿里云百炼（向量嵌入）
+1. 登录阿里云：https://dashscope.console.aliyun.com
+2. 进入"API-KEY Management"
+3. 创建或复制现有 API Key
 
 ---
 

@@ -22,6 +22,27 @@
   display: block;
 }
 
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.action-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: #fff;
+  border-radius: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.action-icon {
+  font-size: 18px;
+}
+
 .report-btn {
   display: flex;
   align-items: center;
@@ -157,4 +178,43 @@
 
 .fab-btn::after {
   border: none;
+}
+
+/* 标签操作菜单 */
+.menu-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 998;
+}
+
+.action-menu {
+  position: fixed;
+  left: 20px;
+  right: 20px;
+  bottom: 100px;
+  background: #fff;
+  border-radius: 16px;
+  padding: 8px 0;
+  z-index: 999;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.15);
+}
+
+.menu-item {
+  padding: 16px 20px;
+  font-size: 16px;
+  color: #333;
+  text-align: center;
+}
+
+.menu-cancel {
+  padding: 16px 20px;
+  font-size: 16px;
+  color: #999;
+  text-align: center;
+  margin-top: 8px;
+  border-top: 1px solid #f0f0f0;
 }

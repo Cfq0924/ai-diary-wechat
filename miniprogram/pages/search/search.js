@@ -11,7 +11,7 @@ Page({
   },
 
   onLoad(options) {
-    // 如果从标签跳转过来，自动搜索该标签
+    // 如果从标签跳转过来（URL 参数）
     if (options.tag) {
       const tag = decodeURIComponent(options.tag);
       this.setData({
@@ -20,6 +20,17 @@ Page({
         hasSearched: true,
       });
       this.searchByTag(tag);
+    }
+    // 如果从标签管理页跳转过来（本地存储）
+    const searchTag = wx.getStorageSync('searchTag');
+    if (searchTag) {
+      this.setData({
+        keyword: searchTag,
+        currentTag: searchTag,
+        hasSearched: true,
+      });
+      this.searchByTag(searchTag);
+      wx.removeStorageSync('searchTag'); // 清除缓存
     }
   },
 

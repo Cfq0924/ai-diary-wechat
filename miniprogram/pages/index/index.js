@@ -10,6 +10,10 @@ Page({
     hasMore: true,
     today: '',
     skip: 0,
+    showMenu: false,
+    menuBottom: 100,
+    currentTag: '',
+    currentDiaryId: '',
   },
 
   onLoad() {
@@ -121,6 +125,11 @@ Page({
     wx.navigateTo({ url: '/pages/report/report' });
   },
 
+  // 前往标签管理页
+  goToTags() {
+    wx.navigateTo({ url: '/pages/tags/tags' });
+  },
+
   goToDetail(e) {
     const id = e.currentTarget.dataset.id;
     // 防止点击标签时触发跳转
@@ -133,6 +142,69 @@ Page({
     const tag = e.currentTarget.dataset.tag;
     wx.navigateTo({
       url: `/pages/search/search?tag=${encodeURIComponent(tag)}`,
+    });
+  },
+
+  // 显示标签菜单
+  showTagMenu(e) {
+    console.log('=== showTagMenu 被调用 ===');
+    console.log('e.currentTarget.dataset:', e.currentTarget.dataset);
+    console.log('e.target.dataset:', e.target.dataset);
+
+    const tag = e.currentTarget.dataset.tag;
+    const diaryId = e.currentTarget.dataset.diaryId;
+    console.log('tag:', tag, 'diaryId:', diaryId);
+
+    this.setData({
+      currentTag: tag,
+      currentDiaryId: diaryId,
+      showMenu: true,
+      menuBottom: 100,
+    });
+  },
+
+  // 隐藏菜单
+  hideMenu() {
+    this.setData({
+      showMenu: false,
+      currentTag: '',
+      currentDiaryId: '',
+    });
+  },
+
+  // 从菜单搜索标签
+  searchByTagFromMenu() {
+    // 先保存 currentTag，因为 hideMenu 会清空它
+    const tagToSearch = this.data.currentTag;
+    console.log('searchByTagFromMenu - tag:', tagToSearch);
+    this.hideMenu();
+
+    if (!tagToSearch) {
+      wx.showToast({ title: '标签为空', icon: 'none' });
+      return;
+    }
+
+    // 搜索页是 tabBar 页面，需要用 switchTab，参数通过本地存储传递
+    wx.setStorageSync('searchTag', tagToSearch);
+    wx.switchTab({
+      url: '/pages/search/search',
+    });
+  },
+
+  // 管理标签（跳转到标签管理页）
+  manageTagInPage() {
+    // 先保存 currentTag，因为 hideMenu 会清空它
+    const tagToManage = this.data.currentTag;
+    console.log('manageTagInPage - tag:', tagToManage);
+    this.hideMenu();
+
+    if (!tagToManage) {
+      wx.showToast({ title: '标签为空', icon: 'none' });
+      return;
+    }
+
+    wx.navigateTo({
+      url: `/pages/tags/tags?tag=${encodeURIComponent(tagToManage)}`,
     });
   },
 });

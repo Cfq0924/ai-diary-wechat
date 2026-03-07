@@ -12,6 +12,9 @@ miniprogram/project.private.json
 # 云函数 node_modules（如有）
 miniprogram/cloudfunctions/*/node_modules/
 
+# 云函数配置文件（包含 API Key）
+miniprogram/cloudfunctions/config/index.js
+
 # 临时文件
 .DS_Store
 Thumbs.db

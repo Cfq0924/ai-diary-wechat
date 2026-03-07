@@ -2,11 +2,7 @@
 const cloud = require('wx-server-sdk');
 cloud.init({ env: cloud.DYNAMIC_CURRENT_ENV });
 const http = require('https');
-
-// DeepSeek API 配置
-const AI_API_KEY = 'sk-8ff330b1b8e34268ac44ae7cf5589eb3';
-const AI_API_URL = 'https://api.deepseek.com/chat/completions';
-const AI_MODEL = 'deepseek-chat';
+const config = require('../config/index.js');
 
 exports.main = async (event, context) => {
   const { content, diaryId } = event;
@@ -51,14 +47,14 @@ async function generateTagsWithAI(content) {
     const prompt = `给这篇日记生成 3-5 个简短标签，只返回 JSON 数组：\n${content.substring(0, 300)}`;
 
     const requestBody = JSON.stringify({
-      model: AI_MODEL,
+      model: config.DEEPSEEK_MODEL,
       messages: [
         { role: 'user', content: prompt },
       ],
       stream: false,
     });
 
-    const url = new URL(AI_API_URL);
+    const url = new URL(config.DEEPSEEK_API_URL);
     const options = {
       hostname: url.hostname,
       path: url.pathname,
@@ -66,7 +62,7 @@ async function generateTagsWithAI(content) {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${AI_API_KEY}`,
+        'Authorization': `Bearer ${config.DEEPSEEK_API_KEY}`,
       },
     };
 
