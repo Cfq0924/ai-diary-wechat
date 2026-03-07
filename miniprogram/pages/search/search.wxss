@@ -47,6 +47,27 @@
   padding: 16px;
 }
 
+.searching-tag {
+  margin-bottom: 12px;
+  padding: 8px 12px;
+  background: #e8f5e9;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.tag-label {
+  font-size: 13px;
+  color: #666;
+}
+
+.tag-name {
+  font-size: 14px;
+  color: #07c160;
+  font-weight: 500;
+}
+
 .result-list {
   display: flex;
   flex-direction: column;

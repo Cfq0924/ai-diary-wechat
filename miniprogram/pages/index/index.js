@@ -103,6 +103,16 @@ Page({
 
   goToDetail(e) {
     const id = e.currentTarget.dataset.id;
+    // 防止点击标签时触发跳转
+    if (e.target.classList && e.target.classList.contains('tag-small')) return;
     wx.navigateTo({ url: `/pages/detail/detail?id=${id}` });
+  },
+
+  // 点击标签搜索
+  searchByTag(e) {
+    const tag = e.currentTarget.dataset.tag;
+    wx.navigateTo({
+      url: `/pages/search/search?tag=${encodeURIComponent(tag)}`,
+    });
   },
 });

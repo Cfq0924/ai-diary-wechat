@@ -22,7 +22,7 @@
     <view wx:for="{{diaryList}}" wx:key="_id" class="diary-item" bindtap="goToDetail" data-id="{{item._id}}">
       <view class="diary-content">{{item.content}}</view>
       <view class="diary-tags" wx:if="{{item.autoTags && item.autoTags.length > 0}}">
-        <text wx:for="{{item.autoTags}}" wx:key="*this" class="tag-small">{{item}}</text>
+        <text wx:for="{{item.autoTags}}" wx:key="*this" class="tag-small" catchtap="searchByTag" data-tag="{{item}}">{{item}}</text>
       </view>
       <view class="diary-meta">
         <text class="diary-date">{{item.dateStr}}</text>

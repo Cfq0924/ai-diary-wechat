@@ -8,6 +8,7 @@ Page({
     wordCount: 0,
     autoTags: [],
     diaryId: '',
+    relatedDiaries: [],
   },
 
   onLoad(options) {
@@ -26,10 +27,44 @@ Page({
         wordCount: (data.content || '').length,
         autoTags: data.auto_tags || [],
       });
+
+      // 加载相关日记
+      if (this.data.autoTags.length > 0) {
+        this.loadRelatedDiaries(id, this.data.autoTags);
+      }
     } catch (err) {
       console.error('加载失败:', err);
       wx.showToast({ title: '加载失败', icon: 'none' });
       setTimeout(() => wx.navigateBack(), 1500);
+    }
+  },
+
+  // 加载相关日记（有相同标签的）
+  async loadRelatedDiaries(currentId, tags) {
+    try {
+      // 查找有相同标签的其他日记
+      const { data } = await db.collection('diary_entries')
+        .where({
+          _id: db.command.neq(currentId),
+          auto_tags: db.command.in(tags),
+        })
+        .orderBy('created_at', 'desc')
+        .limit(5)
+        .get();
+
+      const relatedDiaries = data.map(item => {
+        // 找出共同的标签
+        const commonTags = (item.auto_tags || []).filter(t => tags.includes(t));
+        return {
+          ...item,
+          dateStr: this.formatDate(item.created_at),
+          commonTag: commonTags[0] || '',
+        };
+      });
+
+      this.setData({ relatedDiaries });
+    } catch (err) {
+      console.error('加载相关日记失败:', err);
     }
   },
 
@@ -65,5 +100,18 @@ Page({
         }
       },
     });
+  },
+
+  // 点击标签搜索
+  searchByTag(e) {
+    const tag = e.currentTarget.dataset.tag;
+    wx.navigateTo({
+      url: `/pages/search/search?tag=${encodeURIComponent(tag)}`,
+    });
+  },
+
+  goToDetail(e) {
+    const id = e.currentTarget.dataset.id;
+    wx.navigateTo({ url: `/pages/detail/detail?id=${id}` });
   },
 });

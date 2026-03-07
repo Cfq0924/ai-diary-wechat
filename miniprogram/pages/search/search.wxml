@@ -15,6 +15,10 @@
 
   <!-- 搜索结果 -->
   <view wx:if="{{hasSearched}}" class="result-section">
+    <view wx:if="{{currentTag}}" class="searching-tag">
+      <text class="tag-label">搜索标签：</text>
+      <text class="tag-name">{{currentTag}}</text>
+    </view>
     <view wx:if="{{resultList.length === 0}}" class="empty-state">
       <text class="empty-text">没有找到相关内容</text>
     </view>

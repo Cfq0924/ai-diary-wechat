@@ -6,6 +6,20 @@ Page({
     keyword: '',
     resultList: [],
     hasSearched: false,
+    currentTag: '',
+  },
+
+  onLoad(options) {
+    // 如果从标签跳转过来，自动搜索该标签
+    if (options.tag) {
+      const tag = decodeURIComponent(options.tag);
+      this.setData({
+        keyword: tag,
+        currentTag: tag,
+        hasSearched: true,
+      });
+      this.searchByTag(tag);
+    }
   },
 
   onInput(e) {
@@ -17,6 +31,7 @@ Page({
       keyword: '',
       resultList: [],
       hasSearched: false,
+      currentTag: '',
     });
   },
 
@@ -27,14 +42,46 @@ Page({
       return;
     }
 
+    this.setData({ currentTag: '' });
     this.searchDiary(keyword);
   },
 
+  // 按标签搜索
+  async searchByTag(tag) {
+    wx.showLoading({ title: '搜索中...' });
+
+    try {
+      const { data } = await db.collection('diary_entries')
+        .where({
+          auto_tags: tag,
+        })
+        .orderBy('created_at', 'desc')
+        .limit(100)
+        .get();
+
+      const resultList = data.map(item => ({
+        ...item,
+        highlight: item.content,
+        dateStr: this.formatDate(item.created_at),
+      }));
+
+      this.setData({
+        resultList,
+        hasSearched: true,
+      });
+    } catch (err) {
+      console.error('搜索失败:', err);
+      wx.showToast({ title: '搜索失败', icon: 'none' });
+    }
+
+    wx.hideLoading();
+  },
+
+  // 全文搜索
   async searchDiary(keyword) {
     wx.showLoading({ title: '搜索中...' });
 
     try {
-      // 使用正则表达式进行模糊搜索
       const { data } = await db.collection('diary_entries')
         .where({
           content: db.RegExp({
