@@ -20,7 +20,16 @@ Page({
 
   onShow() {
     // 从编辑页返回时，刷新列表
-    this.setData({ skip: 0, hasMore: true }, () => {
+    this.refreshList();
+  },
+
+  refreshList() {
+    this.setData({
+      diaryList: [],
+      skip: 0,
+      hasMore: true,
+      loading: false
+    }, () => {
       this.loadDiaryList(true);
     });
   },

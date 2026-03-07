@@ -60,7 +60,7 @@ Page({
         // 编辑模式：延迟返回上一页
         setTimeout(() => {
           wx.navigateBack();
-        }, 500);
+        }, 300);
       } else {
         // 新增
         const { _id } = await db.collection('diary_entries').add({
@@ -75,14 +75,14 @@ Page({
         wx.showToast({ title: '保存成功' });
         this.setData({ editId: _id, isEdit: true });
 
-        // 调用云函数生成标签和向量（异步，不阻塞）
-        this.generateTags(_id, this.data.content);
-        this.generateEmbedding(_id, this.data.content);
+        // 等待标签和向量生成完成后再返回首页
+        await this.generateTags(_id, this.data.content);
+        await this.generateEmbedding(_id, this.data.content);
 
-        // 新增模式：延迟返回首页
+        // 延迟返回首页，确保数据已更新
         setTimeout(() => {
           wx.navigateBack();
-        }, 500);
+        }, 300);
       }
     } catch (err) {
       console.error('保存失败:', err);
@@ -103,8 +103,10 @@ Page({
         },
       });
       console.log('标签生成结果:', res.result);
+      return res.result;
     } catch (err) {
       console.error('生成标签失败:', err);
+      return null;
     }
   },
 
@@ -119,8 +121,10 @@ Page({
         },
       });
       console.log('向量生成结果:', res.result);
+      return res.result;
     } catch (err) {
       console.error('生成向量失败:', err);
+      return null;
     }
   },
 });
