@@ -1,0 +1,87 @@
+<!-- 报表页面 -->
+<view class="container">
+  <!-- 报表类型切换 -->
+  <view class="tabs">
+    <view
+      class="tab {{currentTab === 'day' ? 'active' : ''}}"
+      bindtap="switchTab"
+      data-tab="day"
+    >日报</view>
+    <view
+      class="tab {{currentTab === 'week' ? 'active' : ''}}"
+      bindtap="switchTab"
+      data-tab="week"
+    >周报</view>
+    <view
+      class="tab {{currentTab === 'month' ? 'active' : ''}}"
+      bindtap="switchTab"
+      data-tab="month"
+    >月报</view>
+  </view>
+
+  <!-- 日期选择 -->
+  <view class="date-selector">
+    <button class="nav-btn" bindtap="prevPeriod">‹</button>
+    <text class="current-date">{{currentDateLabel}}</text>
+    <button class="nav-btn" bindtap="nextPeriod">›</button>
+  </view>
+
+  <!-- 报表内容 -->
+  <scroll-view class="report-content" scroll-y>
+    <view wx:if="{{loading}}" class="loading">加载中...</view>
+
+    <view wx:elif="{{!hasData}}" class="empty-state">
+      <text class="empty-text">这段时间还没有日记</text>
+    </view>
+
+    <view wx:else>
+      <!-- 统计概览 -->
+      <view class="stats-card">
+        <view class="stats-row">
+          <view class="stat-item">
+            <text class="stat-value">{{stats.diaryCount}}</text>
+            <text class="stat-label">篇日记</text>
+          </view>
+          <view class="stat-item">
+            <text class="stat-value">{{stats.totalWords}}</text>
+            <text class="stat-label">总字数</text>
+          </view>
+          <view class="stat-item">
+            <text class="stat-value">{{stats.avgWords}}</text>
+            <text class="stat-label">均篇字数</text>
+          </view>
+        </view>
+      </view>
+
+      <!-- 高频词云 -->
+      <view class="section" wx:if="{{topWords.length > 0}}">
+        <view class="section-title">高频词</view>
+        <view class="word-cloud">
+          <text
+            wx:for="{{topWords}}"
+            wx:key="word"
+            class="word-item"
+            style="font-size: {{item.size}}px; color: {{item.color}};"
+          >{{item.word}}</text>
+        </view>
+      </view>
+
+      <!-- 日记列表 -->
+      <view class="section">
+        <view class="section-title">日记详情</view>
+        <view class="diary-list">
+          <view
+            wx:for="{{diaryList}}"
+            wx:key="_id"
+            class="diary-item"
+            bindtap="goToDetail"
+            data-id="{{item._id}}"
+          >
+            <view class="diary-time">{{item.timeStr}}</view>
+            <view class="diary-content">{{item.content}}</view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </scroll-view>
+</view>

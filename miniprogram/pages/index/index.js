@@ -96,6 +96,10 @@ Page({
     wx.navigateTo({ url: '/pages/edit/edit' });
   },
 
+  goToReport() {
+    wx.navigateTo({ url: '/pages/report/report' });
+  },
+
   goToDetail(e) {
     const id = e.currentTarget.dataset.id;
     wx.navigateTo({ url: `/pages/detail/detail?id=${id}` });

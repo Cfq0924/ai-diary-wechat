@@ -2,7 +2,13 @@
 <view class="container">
   <!-- 头部 -->
   <view class="header">
-    <text class="title">我的日记</text>
+    <view class="header-top">
+      <text class="title">我的日记</text>
+      <view class="report-btn" bindtap="goToReport">
+        <text class="report-icon">📊</text>
+        <text class="report-text">报表</text>
+      </view>
+    </view>
     <text class="subtitle">{{today}}</text>
   </view>
 
