@@ -71,8 +71,9 @@ Page({
         wx.showToast({ title: '保存成功' });
         this.setData({ editId: _id, isEdit: true });
 
-        // 调用云函数生成标签（异步，不阻塞）
+        // 调用云函数生成标签和向量（异步，不阻塞）
         this.generateTags(_id, this.data.content);
+        this.generateEmbedding(_id, this.data.content);
       }
     } catch (err) {
       console.error('保存失败:', err);
@@ -95,6 +96,22 @@ Page({
       console.log('标签生成结果:', res.result);
     } catch (err) {
       console.error('生成标签失败:', err);
+    }
+  },
+
+  // 调用云函数生成向量
+  async generateEmbedding(diaryId, content) {
+    try {
+      const res = await wx.cloud.callFunction({
+        name: 'generateEmbedding',
+        data: {
+          diaryId,
+          content,
+        },
+      });
+      console.log('向量生成结果:', res.result);
+    } catch (err) {
+      console.error('生成向量失败:', err);
     }
   },
 });

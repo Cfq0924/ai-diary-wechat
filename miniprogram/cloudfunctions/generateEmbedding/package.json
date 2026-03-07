@@ -1,0 +1,9 @@
+{
+  "name": "generateEmbedding",
+  "version": "1.0.0",
+  "description": "Generate vector embeddings for diary content using Alibaba Cloud DashScope text-embedding-v4",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "~2.6.3"
+  }
+}

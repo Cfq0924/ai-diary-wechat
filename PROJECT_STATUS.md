@@ -144,18 +144,28 @@ sanling/
 - **最新提交**: `c317e42` - feat: 完成智能关联功能 (Phase 3-B)
 
 ### API 配置
-- **DeepSeek API Key**: `sk-8ff330b1b8e34268ac44ae7cf5589eb3`
+
+**AI 标签生成 (DeepSeek)**:
+- **API Key**: `sk-8ff330b1b8e34268ac44ae7cf5589eb3`
 - **API 地址**: `https://api.deepseek.com/chat/completions`
 - **模型**: `deepseek-chat`
+
+**向量嵌入 (阿里云百炼)**:
+- **API Key**: `sk-1a991dc9a7d14324bd11eb1f507073a7`
+- **API 地址**: `https://dashscope.aliyuncs.com/compatible-mode/v1/embeddings`
+- **模型**: `text-embedding-v4`
+- **维度**: 1536
 
 ---
 
 ## 待实现功能
 
-### Phase 3-C: 语义搜索（未开始）
-- [ ] 向量数据库接入
-- [ ] 日记内容向量化存储
-- [ ] 语义相似度搜索
+### Phase 3-C: 语义搜索（进行中）
+- [x] 向量数据库接入 - 使用阿里云百炼 text-embedding-v4
+- [x] 日记内容向量化存储 - 云函数 `generateEmbedding` 已完成
+- [x] 语义相似度搜索 - 前端逻辑已完成
+- [ ] 云函数部署 - 待上传到云端
+- [ ] 历史数据迁移 - 为现有日记生成向量
 
 ### 其他迭代建议
 - [ ] 标签管理（手动编辑/删除标签）

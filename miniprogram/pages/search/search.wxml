@@ -13,6 +13,17 @@
     <button wx:if="{{keyword}}" class="clear-btn" bindtap="clearSearch">×</button>
   </view>
 
+  <!-- 语义搜索开关 -->
+  <view class="semantic-search-toggle">
+    <view class="toggle-label">语义搜索</view>
+    <switch
+      checked="{{isSemanticSearch}}"
+      bindchange="toggleSemanticSearch"
+      color="#07c160"
+    />
+    <text class="toggle-desc">{{isSemanticSearch ? '已开启' : '已关闭'}}</text>
+  </view>
+
   <!-- 搜索结果 -->
   <view wx:if="{{hasSearched}}" class="result-section">
     <view wx:if="{{currentTag}}" class="searching-tag">
@@ -24,11 +35,15 @@
     </view>
 
     <view wx:else class="result-list">
-      <view class="result-info">找到 {{resultList.length}} 篇相关日记</view>
+      <view class="result-info">
+        <text>找到 {{resultList.length}} 篇相关日记</text>
+        <text wx:if="{{isSemanticSearch}}" class="search-mode-hint">（按语义相似度排序）</text>
+      </view>
       <view wx:for="{{resultList}}" wx:key="_id" class="result-item" bindtap="goToDetail" data-id="{{item._id}}">
         <view class="result-content">{{item.highlight}}</view>
         <view class="result-meta">
           <text class="result-date">{{item.dateStr}}</text>
+          <text wx:if="{{isSemanticSearch}}" class="similarity-score">相似度：{{item.similarityScore}}%</text>
         </view>
       </view>
     </view>
@@ -37,6 +52,7 @@
   <!-- 初始状态 -->
   <view wx:if="{{!hasSearched}}" class="search-tips">
     <text class="tip-title">输入关键词搜索日记</text>
-    <text class="tip-desc">支持全文内容搜索</text>
+    <text class="tip-desc">支持全文内容搜索和语义搜索</text>
+    <text class="tip-desc-small">语义搜索可以理解语义相关但无关键词匹配的内容</text>
   </view>
 </view>
