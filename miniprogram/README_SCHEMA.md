@@ -11,8 +11,9 @@
 | content | String | 日记内容 |
 | created_at | Date | 创建时间 |
 | updated_at | Date | 更新时间 |
-| auto_tags | Array | AI 自动生成的标签，MVP 阶段可为空数组 |
+| auto_tags | Array | AI 自动生成的标签（支持手动编辑/删除） |
 | word_count | Number | 字数 |
+| embedding | Array | 向量嵌入（1536 维，用于语义搜索） |
 | mood | String | 情绪（后续迭代） |
 | is_deleted | Boolean | 是否删除（软删除用） |
 
@@ -22,6 +23,7 @@
 |------|------|------|
 | created_at | DESC | 时间线排序 |
 | _openid | ASC | 用户数据隔离 |
+| auto_tags | ASC | 标签搜索 |
 | word_count | ASC/DESC | 统计用 |
 
 ### 初始化步骤
@@ -51,3 +53,12 @@ V2.0 可以考虑添加：
 - `voice_url`: 语音记录
 - `ai_summary`: AI 总结
 - `related_ids`: 相关日记 ID 数组
+
+---
+
+## 已完成功能
+
+- ✅ AI 自动标签（auto_tags）
+- ✅ 向量嵌入（embedding）
+- ✅ 标签管理（重命名/删除/合并）
+- ✅ 语义搜索（基于 embedding）

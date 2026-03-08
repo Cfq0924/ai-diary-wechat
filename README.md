@@ -23,6 +23,7 @@
 │  pages/detail   - 日记详情页                             │
 │  pages/search   - 搜索页 (全文/语义)                     │
 │  pages/report   - 统计报表页                             │
+│  pages/tags     - 标签管理页                             │
 └─────────────────────────────────────────────────────────┘
                           │
                           ▼
@@ -31,6 +32,7 @@
 │  云数据库 diary_entries (MongoDB)                        │
 │  云函数 generateTags    - AI 标签生成 (DeepSeek)         │
 │  云函数 generateEmbedding - 向量生成 (阿里云百炼)         │
+│  云函数 manageTags      - 标签管理 (重命名/删除/合并)    │
 └─────────────────────────────────────────────────────────┘
                           │
                           ▼
@@ -49,7 +51,8 @@
 | Phase 2 | 统计报表（日报/周报/月报） | ✅ 完成 |
 | Phase 3-A | AI 自动标签 | ✅ 完成 |
 | Phase 3-B | 智能关联推荐 | ✅ 完成 |
-| Phase 3-C | 语义搜索 | ✅ 完成 (待部署) |
+| Phase 3-C | 语义搜索 | ✅ 完成 |
+| Phase 4 | 标签管理 | ✅ 完成 |
 
 ## 快速开始
 
@@ -73,6 +76,7 @@
 右键以下云函数目录，上传并部署（云端安装依赖）：
 - `cloudfunctions/generateTags`
 - `cloudfunctions/generateEmbedding`
+- `cloudfunctions/manageTags`
 
 ### 5. 编译运行
 
@@ -92,15 +96,18 @@ sanling/
 │   │   ├── index/                # 首页（时间线）
 │   │   ├── edit/                 # 编辑页
 │   │   ├── detail/               # 详情页
-│   │   ├── search/               # 搜索页
-│   │   └── report/               # 统计报表
+│   │   ├── search/               # 搜索页（全文/语义）
+│   │   ├── report/               # 统计报表
+│   │   └── tags/                 # 标签管理
 │   │
 │   ├── cloudfunctions/
+│   │   ├── config/               # API 配置（不上传到 GitHub）
 │   │   ├── generateTags/         # AI 标签生成
-│   │   └── generateEmbedding/    # 向量嵌入生成
+│   │   ├── generateEmbedding/    # 向量嵌入生成
+│   │   └── manageTags/           # 标签管理（重命名/删除/合并）
 │   │
 │   └── utils/
-│       └── util.js               # 工具函数
+│       └── util.js               # 工具函数（标签颜色生成）
 │
 ├── PROJECT_STATUS.md             # 项目进度报告
 └── README.md                     # 本文件
@@ -116,7 +123,7 @@ sanling/
   content: String,       // 日记内容
   created_at: Date,      // 创建时间
   updated_at: Date,      // 更新时间
-  auto_tags: Array,      // AI 生成的标签
+  auto_tags: Array,      // AI 生成的标签（支持手动编辑/删除）
   word_count: Number,    // 字数
   embedding: Array       // 向量嵌入 (1536 维)
 }
@@ -134,8 +141,7 @@ sanling/
 
 ## 开发计划
 
-- [ ] 标签管理（手动编辑/删除）
-- [ ] 标签云视图
+- [ ] 标签云视图 - 按标签聚合展示
 - [ ] 数据导出（Markdown/PDF）
 - [ ] 语音输入
 

@@ -44,11 +44,16 @@
 - [x] 月报生成
 - [x] 统计数据 - 篇数、字数、高频词分析
 
-### Phase 3 (进行中)
+### Phase 3 (已完成)
 
 - [x] AI 自动标签 - DeepSeek API 生成 3-5 个标签
 - [x] 智能关联推荐 - 相同标签日记推荐
 - [x] 语义搜索 - 阿里云百炼 text-embedding-v4 向量相似度搜索
+
+### Phase 4 (已完成)
+
+- [x] 标签管理 - 手动编辑/删除标签
+- [x] 标签管理页 - 独立页面管理所有标签
 
 ## 项目结构
 
@@ -58,11 +63,15 @@ miniprogram/
 │   ├── index/       # 首页（时间线）
 │   ├── edit/        # 编辑页
 │   ├── detail/      # 详情页
-│   └── search/      # 搜索页
+│   ├── search/      # 搜索页（全文/语义）
+│   ├── report/      # 统计报表
+│   └── tags/        # 标签管理
 ├── cloudfunctions/  # 云函数
 │   ├── generateTags/       # AI 标签生成
-│   └── generateEmbedding/  # 向量嵌入生成
+│   ├── generateEmbedding/  # 向量嵌入生成
+│   └── manageTags/         # 标签管理（重命名/删除/合并）
 ├── utils/           # 工具函数
+│   └── util.js      # 标签颜色生成
 ├── images/          # 图片资源
 ├── app.js           # 小程序入口
 ├── app.json         # 全局配置
@@ -87,7 +96,6 @@ miniprogram/
 
 ## 后续迭代
 
-- [ ] 标签管理 - 手动编辑/删除标签
 - [ ] 标签云视图 - 按标签聚合展示
 - [ ] 数据导出功能 - 导出为 Markdown/PDF
 - [ ] 语音输入 - 微信语音识别 API

@@ -29,7 +29,68 @@ module.exports = {
 |--------|------|----------|
 | `generateTags` | AI 标签生成 | DeepSeek Chat |
 | `generateEmbedding` | 向量嵌入生成 | 阿里云百炼 |
-| `manageTags` | 标签管理（重命名/删除/合并）| 无 |
+| `manageTags` | 标签管理（重命名/删除/合并） | 无 |
+
+## 云函数说明
+
+### generateTags
+
+**触发方式**: 自动触发（保存日记时）
+
+**功能**:
+- 接收日记内容
+- 调用 DeepSeek API 生成 3-5 个标签
+- 返回标签数组
+
+### generateEmbedding
+
+**触发方式**: 自动触发（保存日记时）
+
+**功能**:
+- 接收日记内容
+- 调用阿里云百炼 API 生成向量嵌入
+- 返回 1536 维向量数组
+
+### manageTags
+
+**触发方式**: 手动调用（标签管理页）
+
+**功能**:
+- **重命名标签**: 批量更新所有日记中的标签名
+- **删除标签**: 从所有日记中移除指定标签
+- **合并标签**: 将多个标签合并为一个
+
+**调用示例**:
+```javascript
+// 重命名标签
+wx.cloud.callFunction({
+  name: 'manageTags',
+  data: {
+    action: 'rename',
+    oldTag: '旧标签',
+    newTag: '新标签'
+  }
+});
+
+// 删除标签
+wx.cloud.callFunction({
+  name: 'manageTags',
+  data: {
+    action: 'delete',
+    tag: '要删除的标签'
+  }
+});
+
+// 合并标签
+wx.cloud.callFunction({
+  name: 'manageTags',
+  data: {
+    action: 'merge',
+    tags: ['标签 1', '标签 2'],
+    targetTag: '目标标签'
+  }
+});
+```
 
 ## 部署步骤
 
@@ -40,9 +101,18 @@ module.exports = {
 
 ## 测试
 
+### 基础测试
+
 1. 写一篇新日记
 2. 保存后查看控制台日志
 3. 应该能看到自动生成的标签和向量
+
+### 标签管理测试
+
+1. 打开标签管理页（pages/tags）
+2. 点击标签进入详情
+3. 测试重命名、删除功能
+4. 查看控制台日志确认云函数调用成功
 
 ---
 
@@ -71,3 +141,9 @@ A: 检查 API Key 是否正确，账户是否有余额
 
 **Q: 标签生成慢？**
 A: 首次调用会慢一些（冷启动），后续会快
+
+**Q: 标签管理云函数报错？**
+A: 检查 `manageTags` 云函数是否已部署，确认标签名是否正确
+
+**Q: 重命名标签后搜索不到？**
+A: 标签重命名会批量更新所有相关日记，完成后即可正常搜索

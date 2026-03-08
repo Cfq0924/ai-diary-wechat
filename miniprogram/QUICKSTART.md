@@ -22,7 +22,14 @@ env: 'your-env-id',  // 改成你的环境 ID
 3. 输入集合名：`diary_entries`
 4. 权限选择："所有用户可读写"
 
-### 步骤 5: 编译运行
+### 步骤 5: 部署云函数
+
+右键以下云函数目录，上传并部署（云端安装依赖）：
+- `cloudfunctions/generateTags`
+- `cloudfunctions/generateEmbedding`
+- `cloudfunctions/manageTags`
+
+### 步骤 6: 编译运行
 点击"编译"按钮
 
 ---
@@ -50,6 +57,8 @@ A: 临时方案：在 app.json 中注释掉 tabBar 配置，或放入任意 81x8
 - ✅ 点击右下角 "+" 写日记
 - ✅ 保存后在首页看到日记列表
 - ✅ 点击日记查看详情
-- ✅ 在搜索页搜索内容
+- ✅ 在搜索页搜索内容（全文/语义）
+- ✅ 点击标签搜索相关内容
+- ✅ 在标签管理页管理所有标签
 
- Phase 1 完成！🎉
+Phase 1-4 全部完成！🎉

@@ -1,5 +1,6 @@
 // pages/search/search.js
 const db = wx.cloud.database();
+const _ = db.command;
 
 Page({
   data: {
@@ -24,6 +25,20 @@ Page({
     // 如果从标签管理页跳转过来（本地存储）
     const searchTag = wx.getStorageSync('searchTag');
     if (searchTag) {
+      this.setData({
+        keyword: searchTag,
+        currentTag: searchTag,
+        hasSearched: true,
+      });
+      this.searchByTag(searchTag);
+      wx.removeStorageSync('searchTag'); // 清除缓存
+    }
+  },
+
+  onShow() {
+    // 处理从 switchTab 跳转的情况（onLoad 不会重新触发）
+    const searchTag = wx.getStorageSync('searchTag');
+    if (searchTag && !this.data.currentTag) {
       this.setData({
         keyword: searchTag,
         currentTag: searchTag,
@@ -79,7 +94,7 @@ Page({
     try {
       const { data } = await db.collection('diary_entries')
         .where({
-          auto_tags: tag,
+          auto_tags: _.in([tag]),
         })
         .orderBy('created_at', 'desc')
         .limit(100)
